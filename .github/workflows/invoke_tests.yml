@@ -45,8 +45,8 @@ jobs:
           docker-compose -f grid.yaml down
           docker-compose -f test-suites.yaml down
           mkdir -p artifacts
-          cp output/flight-reservation artifacts/flight-reservation/
-          cp output/vendor-portal artifacts/vendor-portal/
+          cp -r output/flight-reservation artifacts/
+          cp -r output/vendor-portal artifacts/
 
       - name: Upload Test Reports
         if: always()
