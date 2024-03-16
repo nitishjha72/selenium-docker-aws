@@ -23,8 +23,8 @@ jobs:
       - name: set up java
         uses: actions/setup-java@v3
         with:
-          distribution: 'bellsoft'
-          java-version: '11'
+          distribution: 'adopt'
+          java-version: '17'
 
       - name: Build the maven project
         run: mvn clean package -DskipTests
