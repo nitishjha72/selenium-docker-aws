@@ -3,7 +3,7 @@ version: '3'
 services:
 
   flight-reservation:
-    image: nitishjha72/selenium
+    image: nitishjha72/selenium-docker-aws
     environment:
       - BROWSER=${BROWSER}
       - HUB_HOST=hub
@@ -13,7 +13,7 @@ services:
       - ./output/flight-reservation:/home/selenium-docker/test-output
     
   vendor-portal:
-    image: nitishjha72/selenium
+    image: nitishjha72/selenium-docker-aws
     environment:
       - BROWSER=${BROWSER}
       - HUB_HOST=hub
