@@ -59,6 +59,7 @@ public abstract class AbstractTest {
     }
 
     private WebDriver getLocalDriver(){
+        log.info("Inside Local driver setup");
         WebDriverManager.chromedriver().setup();
         return new ChromeDriver();
     }
