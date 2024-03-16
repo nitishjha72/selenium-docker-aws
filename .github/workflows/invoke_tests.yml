@@ -1,0 +1,45 @@
+name: Run Functional Tests
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Docker Image"]
+    types:
+      - completed
+
+env:
+  BROWSER: chrome # Default browser choice
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+
+    steps:
+      - name: Start Grid
+        run: docker-compose -f grid.yaml up --scale ${{ matrix.browser }}=2 -d
+
+      - name: Run Tests
+        run: |
+          docker-compose -f test-suites.yaml pull
+          docker-compose -f test-suites.yaml up
+          if [ -f output/flight-reservation/testng-failed.xml ] || [ -f output/vendor-portal/testng-failed.xml ]; then
+            echo "Failed tests found"
+            exit 1
+          fi
+
+      - name: Archive Test Reports
+        if: always()
+        run: |
+          docker-compose -f grid.yaml down
+          docker-compose -f test-suites.yaml down
+          mkdir -p artifacts
+          cp output/flight-reservation/emailable-report.html artifacts/
+          cp output/vendor-portal/emailable-report.html artifacts/
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: artifacts/
+
