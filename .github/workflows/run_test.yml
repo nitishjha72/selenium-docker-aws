@@ -23,13 +23,11 @@ jobs:
         run: mvn clean package -DskipTests
 
       - name: Build Docker image
-        run: |
-          echo "::set-env name=IMAGE_TAG::$(echo $GITHUB_SHA | cut -c1-7)"
-          docker build -t nitishjha72/selenium-docker-aws:${{ env.IMAGE_TAG }} .
+        run: docker build -t nitishjha72/selenium-docker-aws:${{ github.sha }} .
         working-directory: .
 
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image to Docker Hub
-        run: docker push nitishjha72/selenium-docker-aws:${{ env.IMAGE_TAG }}
+        run: docker push nitishjha72/selenium-docker-aws:${{ github.sha }}
