@@ -33,7 +33,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build Docker image
-        run: docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} .
+        run: docker build -t nitishjha72/selenium-docker-aws .
         working-directory: .
 
   push_to_registry:
@@ -50,4 +50,4 @@ jobs:
       - name: Push Docker image
         run: |
           echo ${{env.IMAGE_NAME}}
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker push nitishjha72/selenium-docker-aws
