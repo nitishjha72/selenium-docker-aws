@@ -33,7 +33,7 @@ jobs:
       - name: Run Tests
         run: |
           docker-compose -f test-suites.yaml pull
-          docker-compose -f test-suites.yaml up
+          BROWSER=${{ matrix.browser }} docker-compose -f test-suites.yaml up
           if [ -f output/flight-reservation/testng-failed.xml ] || [ -f output/vendor-portal/testng-failed.xml ]; then
             echo "Failed tests found"
             exit 1
