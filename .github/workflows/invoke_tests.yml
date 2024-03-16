@@ -30,7 +30,7 @@ jobs:
             exit 1
           fi
 
-      - name: Archive Test Reports
+      - name: Archive test reports
         if: always()
         run: |
           docker-compose -f grid.yaml down
@@ -38,6 +38,9 @@ jobs:
           mkdir -p artifacts
           cp output/flight-reservation/emailable-report.html artifacts/
           cp output/vendor-portal/emailable-report.html artifacts/
+
+      - name: Upload Test Reports
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: test-reports

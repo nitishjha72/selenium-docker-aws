@@ -31,24 +31,3 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: docker push nitishjha72/selenium-docker-aws:${{ github.sha }}
-
-  post-job:
-    needs: build_and_push_image_to_artifactory
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger other workflow
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { data: workflows } = await github.actions.listRepoWorkflows({
-              owner: context.repo.owner,
-              repo: context.repo.repo
-            });
-            
-            const targetWorkflow = workflows.find(workflow => workflow.name === 'Run Functional Tests');
-            await github.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: targetWorkflow.id
-            });
