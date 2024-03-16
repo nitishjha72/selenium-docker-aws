@@ -33,7 +33,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build Docker image
-        run: docker build -t nitishjha72/selenium-docker-aws .
+        run: docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} .
         working-directory: .
 
   push_to_registry:
@@ -47,7 +47,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Tag Docker image
+        run: docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
       - name: Push Docker image
-        run: |
-          echo ${{env.IMAGE_NAME}}
-          docker push nitishjha72/selenium-docker-aws
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
