@@ -33,7 +33,7 @@ jobs:
         run: docker push nitishjha72/selenium-docker-aws:${{ github.sha }}
 
   post-job:
-    needs: build
+    needs: build_and_push_image_to_artifactory
     runs-on: ubuntu-latest
     steps:
       - name: Trigger other workflow
