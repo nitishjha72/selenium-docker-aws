@@ -6,6 +6,9 @@ on:
     types:
       - completed
 
+  schedule:
+    - cron: '39 23 * * *'
+
 env:
   BROWSER: chrome # Default browser choice
 
