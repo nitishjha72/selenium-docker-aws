@@ -7,7 +7,7 @@ on:
       - completed
 
   schedule:
-    - cron: '39 23 * * *'
+    - cron: '45 23 * * *'
 
 env:
   BROWSER: chrome # Default browser choice
