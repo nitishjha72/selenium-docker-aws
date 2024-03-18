@@ -1,8 +1,9 @@
 name: Build and Push Docker Image
 
 on:
-  schedule:
-    - cron: '13 0 * * *'
+  push:
+    branches:
+      - main
 
 jobs:
   build_and_push_image_to_artifactory:
