@@ -6,8 +6,8 @@ on:
     types:
       - completed
 
-env:
-  BROWSER: chrome # Default browser choice
+#env:
+#  BROWSER: chrome # Default browser choice
 
 jobs:
   test:
